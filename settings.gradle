@@ -1,0 +1,2 @@
+rootProject.name = "Docfriends_Android_Recruit"
+include ':app'
