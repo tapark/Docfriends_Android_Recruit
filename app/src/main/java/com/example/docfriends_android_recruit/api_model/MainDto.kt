@@ -1,4 +1,4 @@
-package com.example.docfriends_android_recruit.main_model
+package com.example.docfriends_android_recruit.api_model
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,7 +7,7 @@ data class MainDto(
     @SerializedName("expertListPosition") val expertListPosition: Int,
     @SerializedName("companyListPosition") val companyListPosition: Int,
     @SerializedName("consultList") val consultList: List<ConsultModel>,
-    @SerializedName("expertList") val expertList: List<ExpertModel>,
-    @SerializedName("companyList") val companyList: List<CompanyModel>,
+//    @SerializedName("expertList") val expertList: List<ExpertModel>,
+//    @SerializedName("companyList") val companyList: List<CompanyModel>,
 
 )

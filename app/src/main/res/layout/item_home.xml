@@ -79,10 +79,15 @@
             app:layout_constraintTop_toBottomOf="@id/contextTextView"
             tools:text="2021.08.19"/>
 
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/garyLine"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="@color/light_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
