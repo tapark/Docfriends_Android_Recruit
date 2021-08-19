@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Docfriends_Android_Recruit</string>
+    <string name="home">홈</string>
+    <string name="expert">전문가</string>
+    <string name="chat">상담방</string>
+    <string name="remote_care">비대면진료</string>
+    <string name="my_page">프로필</string>
 </resources>
