@@ -1,9 +1,10 @@
 package com.example.docfriends_android_recruit.main_api_model
 
+import com.example.docfriends_android_recruit.home.DEFAULT_VIEW_TYPE
 import com.google.gson.annotations.SerializedName
 
 data class ConsultModel(
-    val viewType: Int = 0,
+    val viewType: Int = DEFAULT_VIEW_TYPE,
     val otherData: Any,
     @SerializedName("seq") val seq: Int = -1,
     @SerializedName("title") val title: String = "",

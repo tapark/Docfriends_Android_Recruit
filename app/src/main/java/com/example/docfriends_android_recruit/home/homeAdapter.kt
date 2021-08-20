@@ -1,24 +1,25 @@
 package com.example.docfriends_android_recruit.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.docfriends_android_recruit.R
+import com.example.docfriends_android_recruit.databinding.ItemExpertListBinding
 import com.example.docfriends_android_recruit.main_api_model.ConsultModel
 import com.example.docfriends_android_recruit.databinding.ItemHomeBinding
 import com.example.docfriends_android_recruit.databinding.ItemHomeFirstBinding
+import com.example.docfriends_android_recruit.main_api_model.ExpertModel
 import com.example.docfriends_android_recruit.user_api_model.UserDto
 import com.example.docfriends_android_recruit.user_api_model.UserModel
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeAdapter(): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil) {
+class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil) {
 
     inner class DefaultViewHolder(private val binding: ItemHomeBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(consultModel: ConsultModel) {
@@ -57,9 +58,19 @@ class HomeAdapter(): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil
                 binding.userSuggestionTextView.text = "${myInfo.name}님 안녕하세요?\n$seasonSuggestion"
                 Glide.with(binding.profileImageView)
                     .load(myInfo.profile)
-                    .centerCrop()
                     .into(binding.profileImageView)
             }
+        }
+    }
+
+    inner class ExpertViewHolder(private val binding: ItemExpertListBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(consultModel: ConsultModel) {
+            val adapter = ExpertAdapter()
+            binding.expertRecyclerView.adapter = adapter
+            binding.expertRecyclerView.layoutManager = LinearLayoutManager(fragmentHomeContext, LinearLayoutManager.HORIZONTAL, false)
+            val expertList = consultModel.otherData as List<ExpertModel>
+
+            adapter.submitList(expertList)
         }
     }
 
@@ -70,15 +81,20 @@ class HomeAdapter(): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
-            0 -> {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val view = ItemHomeBinding.inflate(layoutInflater, parent, false)
-                DefaultViewHolder(view)
-            }
-            else -> {
+            TOP_USER_VIEW_TYPE -> {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view = ItemHomeFirstBinding.inflate(layoutInflater, parent, false)
                 FirstViewHolder(view)
+            }
+            EXPERT_VIEW_TYPE -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = ItemExpertListBinding.inflate(layoutInflater, parent, false)
+                ExpertViewHolder(view)
+            }
+            else -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = ItemHomeBinding.inflate(layoutInflater, parent, false)
+                DefaultViewHolder(view)
             }
         }
 
@@ -87,11 +103,15 @@ class HomeAdapter(): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (currentList[position].viewType) {
-            0 -> {
-                (holder as DefaultViewHolder).bind(currentList[position])
+
+            TOP_USER_VIEW_TYPE -> {
+                (holder as FirstViewHolder).bind(currentList[position])
+            }
+            EXPERT_VIEW_TYPE -> {
+                (holder as ExpertViewHolder).bind(currentList[position])
             }
             else -> {
-                (holder as FirstViewHolder).bind(currentList[position])
+                (holder as DefaultViewHolder).bind(currentList[position])
             }
         }
     }

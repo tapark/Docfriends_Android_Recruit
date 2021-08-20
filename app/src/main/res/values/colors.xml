@@ -10,5 +10,6 @@
     <color name="base_color">#13BB00</color>
     <color name="gray">#AAAAAA</color>
     <color name="light_gray">#E6E6E6</color>
+    <color name="dark_gray">#5E5E5E</color>
 
 </resources>

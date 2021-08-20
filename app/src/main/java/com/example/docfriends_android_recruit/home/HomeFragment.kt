@@ -36,10 +36,12 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
     }
 
     private fun initRecyclerView() {
-        homeAdapter = HomeAdapter()
-        binding?.let {
-            it.homeRecyclerView.adapter = homeAdapter
-            it.homeRecyclerView.layoutManager = LinearLayoutManager(context)
+        context?.let {
+            homeAdapter = HomeAdapter(it)
+            binding?.let {
+                it.homeRecyclerView.adapter = homeAdapter
+                it.homeRecyclerView.layoutManager = LinearLayoutManager(context)
+            }
         }
     }
 
@@ -88,9 +90,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                     }
                     response.body()?.let { MainDto ->
 
-                        val firstConsultModel = ConsultModel(viewType = 1, otherData = userDto)
-                        val expertConsultModel = ConsultModel(viewType = 2, otherData = MainDto.expertList)
-                        val companyConsultModel = ConsultModel(viewType = 3, otherData = MainDto.companyList)
+                        val firstConsultModel = ConsultModel(viewType = TOP_USER_VIEW_TYPE, seq = -1, otherData = userDto)
+                        val expertConsultModel = ConsultModel(viewType = EXPERT_VIEW_TYPE, seq = -2, otherData = MainDto.expertList)
+                        //val companyConsultModel = ConsultModel(viewType = COMPANY_VIEW_TYPE, seq = -3, otherData = MainDto.companyList)
 
                         val expertIndex = MainDto.expertListPosition
                         val companyIndex = MainDto.companyListPosition
@@ -99,7 +101,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         recyclerViewList.apply {
                             add(0, firstConsultModel)
                             add(expertIndex, expertConsultModel)
-                            add(companyIndex, companyConsultModel)
+                            //add(companyIndex, companyConsultModel)
                         }
                         homeAdapter.submitList(recyclerViewList)
                         Log.d("Main 데이터 확인", MainDto.toString())
