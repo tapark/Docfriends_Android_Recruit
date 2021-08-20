@@ -7,9 +7,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.docfriends_android_recruit.R
-import com.example.docfriends_android_recruit.api_model.MainDto
-import com.example.docfriends_android_recruit.api_model.MainService
+import com.example.docfriends_android_recruit.main_api_model.ConsultModel
+import com.example.docfriends_android_recruit.main_api_model.MainDto
+import com.example.docfriends_android_recruit.main_api_model.MainService
 import com.example.docfriends_android_recruit.databinding.FragmentHomeBinding
+import com.example.docfriends_android_recruit.user_api_model.UserDto
+import com.example.docfriends_android_recruit.user_api_model.UserService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,9 +30,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         val fragmentHomeBinding = FragmentHomeBinding.bind(view)
         binding = fragmentHomeBinding
 
-        initRecyclerView()
+        initUserApiData()
 
-        initApiData()
+        initRecyclerView()
     }
 
     private fun initRecyclerView() {
@@ -40,7 +43,36 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun initApiData() {
+    private fun initUserApiData() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://run.mocky.io")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(UserService::class.java).also {
+            it.getUserData().enqueue(object: Callback<UserDto> {
+                override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
+                    if (response.isSuccessful.not()) {
+                        // 데이터 수신 실패
+                        Toast.makeText(context, " 서버 연결에 실패했습니다.\n잠시 후 다시 시도해 주세요", Toast.LENGTH_SHORT)
+                        return
+                    }
+                    response.body()?.let { UserDto ->
+                        Log.d("User 데이터 확인", UserDto.toString())
+                        initMainApiData(UserDto)
+                    }
+                }
+
+                override fun onFailure(call: Call<UserDto>, t: Throwable) {
+                    // 데이터 수신 실패
+                    Toast.makeText(context, " 서버 연결에 실패했습니다.\n잠시 후 다시 시도해 주세요", Toast.LENGTH_SHORT)
+                }
+
+            })
+        }
+    }
+
+    private fun initMainApiData(userDto: UserDto) {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://docfriends.github.io")
             .addConverterFactory(GsonConverterFactory.create())
@@ -55,8 +87,22 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         return
                     }
                     response.body()?.let { MainDto ->
-                        homeAdapter.submitList(MainDto.consultList)
-                        //Log.d("데이터 확인", MainDto.toString())
+
+                        val firstConsultModel = ConsultModel(viewType = 1, otherData = userDto)
+                        val expertConsultModel = ConsultModel(viewType = 2, otherData = MainDto.expertList)
+                        val companyConsultModel = ConsultModel(viewType = 3, otherData = MainDto.companyList)
+
+                        val expertIndex = MainDto.expertListPosition
+                        val companyIndex = MainDto.companyListPosition
+
+                        val recyclerViewList = MainDto.consultList.toMutableList<ConsultModel>()
+                        recyclerViewList.apply {
+                            add(0, firstConsultModel)
+                            add(expertIndex, expertConsultModel)
+                            add(companyIndex, companyConsultModel)
+                        }
+                        homeAdapter.submitList(recyclerViewList)
+                        Log.d("Main 데이터 확인", MainDto.toString())
                     }
                 }
 

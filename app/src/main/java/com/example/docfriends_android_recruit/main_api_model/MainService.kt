@@ -1,4 +1,4 @@
-package com.example.docfriends_android_recruit.api_model
+package com.example.docfriends_android_recruit.main_api_model
 
 import retrofit2.Call
 import retrofit2.http.GET
