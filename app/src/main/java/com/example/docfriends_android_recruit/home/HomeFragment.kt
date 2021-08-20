@@ -92,7 +92,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
 
                         val firstConsultModel = ConsultModel(viewType = TOP_USER_VIEW_TYPE, seq = -1, otherData = userDto)
                         val expertConsultModel = ConsultModel(viewType = EXPERT_VIEW_TYPE, seq = -2, otherData = MainDto.expertList)
-                        //val companyConsultModel = ConsultModel(viewType = COMPANY_VIEW_TYPE, seq = -3, otherData = MainDto.companyList)
+                        val companyConsultModel = ConsultModel(viewType = COMPANY_VIEW_TYPE, seq = -3, otherData = MainDto.companyList)
 
                         val expertIndex = MainDto.expertListPosition
                         val companyIndex = MainDto.companyListPosition
@@ -101,7 +101,7 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
                         recyclerViewList.apply {
                             add(0, firstConsultModel)
                             add(expertIndex, expertConsultModel)
-                            //add(companyIndex, companyConsultModel)
+                            add(companyIndex, companyConsultModel)
                         }
                         homeAdapter.submitList(recyclerViewList)
                         Log.d("Main 데이터 확인", MainDto.toString())

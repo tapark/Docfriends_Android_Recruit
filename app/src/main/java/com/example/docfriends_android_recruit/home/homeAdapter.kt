@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.docfriends_android_recruit.databinding.ItemCompanyListBinding
 import com.example.docfriends_android_recruit.databinding.ItemExpertListBinding
 import com.example.docfriends_android_recruit.main_api_model.ConsultModel
 import com.example.docfriends_android_recruit.databinding.ItemHomeBinding
 import com.example.docfriends_android_recruit.databinding.ItemHomeFirstBinding
+import com.example.docfriends_android_recruit.main_api_model.CompanyModel
 import com.example.docfriends_android_recruit.main_api_model.ExpertModel
 import com.example.docfriends_android_recruit.user_api_model.UserDto
 import com.example.docfriends_android_recruit.user_api_model.UserModel
@@ -67,10 +69,23 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
         fun bind(consultModel: ConsultModel) {
             val adapter = ExpertAdapter()
             binding.expertRecyclerView.adapter = adapter
-            binding.expertRecyclerView.layoutManager = LinearLayoutManager(fragmentHomeContext, LinearLayoutManager.HORIZONTAL, false)
-            val expertList = consultModel.otherData as List<ExpertModel>
+            binding.expertRecyclerView.layoutManager =
+                LinearLayoutManager(fragmentHomeContext, LinearLayoutManager.HORIZONTAL, false)
 
+            val expertList = consultModel.otherData as List<ExpertModel>
             adapter.submitList(expertList)
+        }
+    }
+
+    inner class CompanyViewHolder(private val binding: ItemCompanyListBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(consultModel: ConsultModel) {
+            val adapter = CompanyAdapter()
+            binding.companyRecyclerView.adapter = adapter
+            binding.companyRecyclerView.layoutManager =
+                LinearLayoutManager(fragmentHomeContext, LinearLayoutManager.HORIZONTAL, false)
+
+            val companyList =consultModel.otherData as List<CompanyModel>
+            adapter.submitList(companyList)
         }
     }
 
@@ -91,6 +106,11 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
                 val view = ItemExpertListBinding.inflate(layoutInflater, parent, false)
                 ExpertViewHolder(view)
             }
+            COMPANY_VIEW_TYPE -> {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = ItemCompanyListBinding.inflate(layoutInflater, parent, false)
+                CompanyViewHolder(view)
+            }
             else -> {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val view = ItemHomeBinding.inflate(layoutInflater, parent, false)
@@ -109,6 +129,9 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
             }
             EXPERT_VIEW_TYPE -> {
                 (holder as ExpertViewHolder).bind(currentList[position])
+            }
+            COMPANY_VIEW_TYPE -> {
+                (holder as CompanyViewHolder).bind(currentList[position])
             }
             else -> {
                 (holder as DefaultViewHolder).bind(currentList[position])
