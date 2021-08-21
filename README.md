@@ -1,7 +1,44 @@
-사용자정보 API : https://run.mocky.io/v3/388e1a9b-94f0-4eaf-8510-a87a9bd9cc6b
+# Docfriends_Android_Recruit
+
+- 작업기간 : 8/19(목) ~ 8/21(토)
+- 참여인원 : 박태규(tapark)
+
+<코드 구현>
+- MainActivity.kt
+- home / HomeFragment.kt
+- home / HomeAdapter.kt
+- home / ExpertAdapter.kt
+- home / CompanyAdapter.kt
+- home / ViewType.kt
+
+<데이터 모델>
+- https://docfriends.github.io/Docfriends_Android_Recruit/api/home.json
+- main_api_model / MainService.kt
+- main_api_model / MainDto.kt
+- main_api_model / PageMapModel.kt
+- main_api_model / ConsultModel.kt
+- main_api_model / ExpertModel.kt
+- main_api_model / CompanyModel.kt
+- main_api_model / TagModel.kt
+- ~~https://run.mocky.io/v3/388e1a9b-94f0-4eaf-8510-a87a9bd9cc6b~~
+- ~~user_api_model / UserService.kt~~
+- ~~user_api_model / UserDto.kt~~
+- ~~user_api_model / UserModel.kt~~
+
+
+<구현기능>
+- BottomNavigationView로 item별 Fragment 전환
+- 가로형 RecyclerView를 포함하는 세로형 RecyclerView
+- DiffUtil로 RecyclerView 성능 개선
+- 초기데이터 수신 ProgressBar
+- 아래로 Swipe하여 최신데이터 수신 (새로고침)
+
+<사용 라이브러리>
+ - retrofit2 : API 통신
+ - glide : 이미지 로딩
+ - swiperefreshlayout : 새로고침 모션
 
 -----------------------------------------------------
-# Docfriends_Android_Recruit
 
 안녕하세요
 
