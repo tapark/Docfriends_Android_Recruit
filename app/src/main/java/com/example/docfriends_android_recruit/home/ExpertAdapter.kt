@@ -1,5 +1,6 @@
 package com.example.docfriends_android_recruit.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,9 +11,10 @@ import com.example.docfriends_android_recruit.databinding.ItemExpertBinding
 import com.example.docfriends_android_recruit.main_api_model.ExpertModel
 import java.lang.StringBuilder
 
-class ExpertAdapter(): ListAdapter<ExpertModel, ExpertAdapter.ViewHolder>(diffUtil) {
+class ExpertAdapter: ListAdapter<ExpertModel, ExpertAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemExpertBinding): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(expertModel: ExpertModel) {
             binding.expertNameTextView.text = "${expertModel.name}(${expertModel.typeName})"
             binding.expertCompanyTextView.text = expertModel.companyName

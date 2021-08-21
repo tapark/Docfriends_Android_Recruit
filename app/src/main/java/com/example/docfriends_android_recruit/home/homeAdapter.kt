@@ -1,5 +1,6 @@
 package com.example.docfriends_android_recruit.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import java.util.*
 class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, RecyclerView.ViewHolder>(diffUtil) {
 
     inner class DefaultViewHolder(private val binding: ItemHomeBinding): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n", "SimpleDateFormat")
         fun bind(consultModel: ConsultModel) {
             binding.titleTextView.text = consultModel.title
             binding.contextTextView.text = consultModel.context
@@ -42,6 +44,7 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
     }
 
     inner class FirstViewHolder(private val binding: ItemHomeFirstBinding): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(consultModel: ConsultModel) {
             val userDto: UserDto = consultModel.otherData as UserDto
             val myAuth = 1
@@ -65,6 +68,7 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     inner class ExpertViewHolder(private val binding: ItemExpertListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(consultModel: ConsultModel) {
             val adapter = ExpertAdapter()
@@ -77,6 +81,7 @@ class HomeAdapter(val fragmentHomeContext: Context): ListAdapter<ConsultModel, R
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     inner class CompanyViewHolder(private val binding: ItemCompanyListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(consultModel: ConsultModel) {
             val adapter = CompanyAdapter()
