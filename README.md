@@ -38,6 +38,10 @@
  - glide : 이미지 로딩
  - swiperefreshlayout : 새로고침 모션
 
+<구조>
+![doc_friends](https://user-images.githubusercontent.com/67908647/130615394-41bac1b6-e0a6-466c-b6e5-7abc6e6a0024.png)
+
+
 -----------------------------------------------------
 
 안녕하세요
